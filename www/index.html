@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b12">
+<title>IRAQI CYBER LAB</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;padding:20px;
+ background:#090b12;color:#fff;
+ font-family:Arial,sans-serif
+}
+header{text-align:center;padding:25px 0}
+h1{color:#16e6b0;font-size:27px}
+p{color:#aab6c7}
+.card{
+ background:#141d2b;padding:20px;
+ margin:13px 0;border-radius:15px;
+ border:1px solid #25354a
+}
+button{
+ width:100%;padding:16px;
+ border:0;border-radius:10px;
+ background:#087e70;color:white;
+ font-size:16px;font-weight:bold
+}
+#result{
+ white-space:pre-wrap;
+ color:#16e6b0;
+ direction:ltr;text-align:left
+}
+</style>
+</head>
+<body>
+<header>
+<h1>IRAQI CYBER LAB 🇮🇶</h1>
+<p>مختبر الأمن السيبراني التعليمي</p>
+</header>
+
+<div class="card">
+<h3>🔍 فحص المنافذ المحلي</h3>
+<p>تعلّم فحص الخدمات داخل مختبرك.</p>
+<button onclick="show('Port Scanner')">فتح الأداة</button>
+</div>
+
+<div class="card">
+<h3>🌐 تحليل DNS</h3>
+<p>تعرّف على أسماء النطاقات وعناوين IP.</p>
+<button onclick="show('DNS Analyzer')">فتح الأداة</button>
+</div>
+
+<div class="card">
+<h3>🛡️ تحليل HTTP</h3>
+<p>تعلّم أكواد استجابة خوادم الويب.</p>
+<button onclick="show('HTTP Analyzer')">فتح الأداة</button>
+</div>
+
+<div class="card">
+<h3>📚 دروس الأمن السيبراني</h3>
+<p>Linux وPython والشبكات.</p>
+<button onclick="show('Cyber Lessons')">فتح الدروس</button>
+</div>
+
+<div class="card">
+<h3>النتيجة</h3>
+<div id="result">مرحباً بك في مختبرك الأمني.</div>
+</div>
+
+<script>
+function show(name){
+ document.getElementById("result").textContent=
+ "تم فتح قسم: "+name+"\nسيتم تطوير الأداة في المرحلة القادمة.";
+}
+</script>
+</body>
+</html>
+
