@@ -8,72 +8,136 @@
 <title>IRAQI CYBER LAB</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;padding:20px;
- background:#090b12;color:#fff;
- font-family:Arial,sans-serif
-}
-header{text-align:center;padding:25px 0}
+body{margin:0;padding:18px;background:#090b12;color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:20px 0}
 h1{color:#16e6b0;font-size:27px}
-p{color:#aab6c7}
-.card{
- background:#141d2b;padding:20px;
- margin:13px 0;border-radius:15px;
- border:1px solid #25354a
-}
-button{
- width:100%;padding:16px;
- border:0;border-radius:10px;
- background:#087e70;color:white;
- font-size:16px;font-weight:bold
-}
-#result{
- white-space:pre-wrap;
- color:#16e6b0;
- direction:ltr;text-align:left
-}
+p{color:#aab6c7;line-height:1.7}
+.card{background:#141d2b;padding:20px;margin:14px 0;border-radius:17px;border:1px solid #25354a}
+button{width:100%;padding:15px;border:0;border-radius:10px;background:#087e70;color:white;font-size:16px;font-weight:bold;margin-top:10px}
+button:active{opacity:.7}
+input{width:100%;padding:14px;margin:8px 0;background:#090f19;border:1px solid #34445b;border-radius:9px;color:white;font-size:16px;direction:ltr}
+.tool{display:none}
+.back{background:#34445b}
+#result{white-space:pre-wrap;color:#16e6b0;direction:ltr;text-align:left;overflow-wrap:anywhere;line-height:1.7}
+.small{font-size:13px;color:#9caabd}
 </style>
 </head>
 <body>
+
 <header>
 <h1>IRAQI CYBER LAB 🇮🇶</h1>
 <p>مختبر الأمن السيبراني التعليمي</p>
 </header>
 
+<div id="home">
 <div class="card">
 <h3>🔍 فحص المنافذ المحلي</h3>
-<p>تعلّم فحص الخدمات داخل مختبرك.</p>
-<button onclick="show('Port Scanner')">فتح الأداة</button>
+<p>فحص منافذ جهازك المحلي فقط.</p>
+<button onclick="openTool('ports')">فتح الأداة</button>
 </div>
 
 <div class="card">
 <h3>🌐 تحليل DNS</h3>
-<p>تعرّف على أسماء النطاقات وعناوين IP.</p>
-<button onclick="show('DNS Analyzer')">فتح الأداة</button>
+<p>استخراج عناوين IP المرتبطة بالنطاق.</p>
+<button onclick="openTool('dns')">فتح الأداة</button>
 </div>
 
 <div class="card">
 <h3>🛡️ تحليل HTTP</h3>
-<p>تعلّم أكواد استجابة خوادم الويب.</p>
-<button onclick="show('HTTP Analyzer')">فتح الأداة</button>
+<p>عرض حالة الموقع وترويسات الأمان.</p>
+<button onclick="openTool('http')">فتح الأداة</button>
 </div>
 
 <div class="card">
 <h3>📚 دروس الأمن السيبراني</h3>
 <p>Linux وPython والشبكات.</p>
-<button onclick="show('Cyber Lessons')">فتح الدروس</button>
+<button onclick="openTool('lessons')">فتح الدروس</button>
+</div>
+</div>
+
+<div id="ports" class="tool card">
+<h3>🔍 فحص المنافذ المحلي</h3>
+<p>يفحص جهازك نفسه 127.0.0.1 فقط.</p>
+<button onclick="scanPorts()">بدء الفحص</button>
+<button class="back" onclick="home()">رجوع</button>
+</div>
+
+<div id="dns" class="tool card">
+<h3>🌐 تحليل DNS</h3>
+<input id="domain" placeholder="example.com">
+<button onclick="lookupDNS()">تحليل النطاق</button>
+<button class="back" onclick="home()">رجوع</button>
+</div>
+
+<div id="http" class="tool card">
+<h3>🛡️ تحليل HTTP</h3>
+<p>أدخل رابط موقع تريد تحليل استجابته.</p>
+<input id="url" placeholder="https://example.com">
+<button onclick="analyzeHTTP()">تحليل الموقع</button>
+<button class="back" onclick="home()">رجوع</button>
+</div>
+
+<div id="lessons" class="tool card">
+<h3>📚 دروس الأمن السيبراني</h3>
+<h4>1. ما هو DNS؟</h4>
+<p>نظام يحوّل أسماء المواقع إلى عناوين IP.</p>
+<h4>2. ما هو HTTP؟</h4>
+<p>بروتوكول يستخدم لنقل البيانات بين المتصفح والخادم.</p>
+<h4>3. ما هو Port؟</h4>
+<p>رقم يحدد خدمة أو تطبيقاً يستقبل اتصالات الشبكة.</p>
+<h4>4. أوامر Linux</h4>
+<p dir="ltr">pwd - عرض المسار الحالي<br>ls - عرض الملفات<br>cd - تغيير المجلد<br>ip addr - عرض عناوين الشبكة</p>
+<button class="back" onclick="home()">رجوع</button>
 </div>
 
 <div class="card">
-<h3>النتيجة</h3>
+<h3>📋 نتيجة الأداة</h3>
 <div id="result">مرحباً بك في مختبرك الأمني.</div>
 </div>
 
 <script>
-function show(name){
- document.getElementById("result").textContent=
- "تم فتح قسم: "+name+"\nسيتم تطوير الأداة في المرحلة القادمة.";
+function openTool(id){
+ document.getElementById("home").style.display="none";
+ document.querySelectorAll(".tool").forEach(x=>x.style.display="none");
+ document.getElementById(id).style.display="block";
+ output("تم فتح الأداة: "+id);
 }
+function home(){
+ document.getElementById("home").style.display="block";
+ document.querySelectorAll(".tool").forEach(x=>x.style.display="none");
+}
+function output(s){
+ document.getElementById("result").textContent=s;
+}
+function scanPorts(){
+ if(!window.Android){output("واجهة Android غير متصلة. أعد بناء التطبيق.");return;}
+ output("جاري فحص المنافذ المحلية...");
+ Android.scanLocalPorts("127.0.0.1","22,53,80,443,8000,8080");
+}
+function lookupDNS(){
+ let d=document.getElementById("domain").value.trim();
+ if(!d || !/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(d)){
+  output("أدخل اسم نطاق صحيحاً مثل example.com");return;
+ }
+ if(!window.Android){output("واجهة Android غير متصلة.");return;}
+ output("جاري تحليل DNS...");
+ Android.lookupDNS(d);
+}
+function analyzeHTTP(){
+ let u=document.getElementById("url").value.trim();
+ if(!/^https?:\/\/[a-zA-Z0-9.-]+/.test(u)){
+  output("أدخل رابطاً صحيحاً يبدأ بـ https:// أو http://");return;
+ }
+ if(!window.Android){output("واجهة Android غير متصلة.");return;}
+ output("جاري الاتصال بالموقع...");
+ Android.analyzeHTTP(u);
+}
+window.onNativeResult=function(data){
+ try{
+  let x=JSON.parse(data);
+  output(x.result || JSON.stringify(x,null,2));
+ }catch(e){output(String(data));}
+};
 </script>
 </body>
 </html>
